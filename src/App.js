@@ -1,10 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Favorite from './pages/Favorite';
-import Home from './pages/Home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import Navbar from './components/Navbar'
 import Details from './pages/Details';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import Favorite from './pages/Favorite';
+import Home from './pages/Home';
 
 function App() {
   const client = new ApolloClient({
@@ -16,9 +15,11 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Navbar />
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/favorite" exact component={Favorite}></Route>
-        <Route path="/details/:url" exact component={Details}></Route>
+        <Switch>
+          <Route path="/" exact key="Home" component={Home}></Route>
+          <Route path="/favorite" exact key="Favorite" component={Favorite}></Route>
+          <Route path="/details/:url" exact key="Details" component={Details}></Route>
+        </Switch>
       </Router>
     </ApolloProvider>
   );
